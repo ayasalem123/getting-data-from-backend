@@ -1,6 +1,17 @@
 import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
  import * as api from '../api';
- const fetch=createAsyncThunk('datared/fetch',async(args,thunkAPI)=>{
+ export const add=createAsyncThunk('datared/add',async(poste)=>{
+  try{
+    console.log(poste)
+    const res =await api.postdata(poste);
+    console.log(res.data);
+    console.log("b");
+    return res.data;
+   // const data=await res.json();
+  }catch(error){
+    console.log(error)}
+})
+const fetch=createAsyncThunk('datared/fetch',async(args,thunkAPI)=>{
   try{
     const res=await api.fetchpost();
    // const data=await res.json();
@@ -16,8 +27,12 @@ export const dataSlice = createSlice({
 reducers:{},
     extraReducers:{
       [fetch.fulfilled]:(state,action)=>{
-       return action.payload
-      }
+        state.data=action.payload
+      },
+      [add.fulfilled]:(state,action)=>{
+        console.log(state)
+        state.data= [...state.data,action.payload]
+       }
     },
   
 });
