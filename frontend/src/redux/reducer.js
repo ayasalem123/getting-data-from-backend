@@ -11,6 +11,26 @@ import { createSlice,createAsyncThunk } from '@reduxjs/toolkit'
   }catch(error){
     console.log(error)}
 })
+export const update=createAsyncThunk('datared/update',async(id,val)=>{
+  try{
+    const res =await api.modifypost(id,val);
+    console.log(res);
+    console.log(res.data);
+    return res.data;
+   // const data=await res.json();
+  }catch(error){
+    console.log(error)}
+})
+export const Deleteit=createAsyncThunk('datared/Delete',async(id)=>{
+  try{
+    const res =await api.deletepost(id);
+    console.log(res);
+    console.log(res.data);
+    return res.data;
+   // const data=await res.json();
+  }catch(error){
+    console.log(error)}
+})
 const fetch=createAsyncThunk('datared/fetch',async(args,thunkAPI)=>{
   try{
     const res=await api.fetchpost();
@@ -32,11 +52,17 @@ reducers:{},
       [add.fulfilled]:(state,action)=>{
         console.log(state)
         state.data= [...state.data,action.payload]
+       },
+       [update.fulfilled]:(state,action)=>{
+        state.data=action.payload
+       },
+       [Deleteit.fulfilled]:(state,action)=>{
+        state.data=state.payload
        }
     },
   
 });
 export { fetch};
-export const {fetch_all,post} = dataSlice.actions
+export const {fetch_all,post} = dataSlice.actions;
 
 export default dataSlice.reducer;

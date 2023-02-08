@@ -1,7 +1,7 @@
 import './App.css';
-import  {fetch_all} from './redux/reducer'
+import  { fetch_all} from './redux/reducer'
  import { useEffect,useState } from 'react';
- import {fetch,add}from './redux/reducer.js'
+ import {fetch,add,update,Deleteit}from './redux/reducer.js'
 import { useSelector, useDispatch } from 'react-redux'
 import * as api from './api';   
 function App() {
@@ -14,20 +14,23 @@ function App() {
   console.log(data)
   const dispatch = useDispatch()
   const click=()=>{
-    dispatch(add({"name":"hameda"}));
+   // dispatch(add({"name":"hameda"}));
+    //dispatch(update("63dec24cf67af0375da023ed",{"name":val}))
+    console.log("hi")
+    dispatch(Deleteit("63dec24cf67af0375da023ed"))
   }
   useEffect(() => {
       dispatch(fetch());
-      
   },[dispatch]);
   return (
     <div className="App">
-       {data.length?data.map((el)=>{
+       {/* {data.length?data.map((el)=>{
         console.log(data)
         return <div>{el.name}</div>}):<div>hi</div>
-      } 
-      <input type="text" onChange={myScript}/>
-      <button onClick={()=>{click()}}>OK</button>
+      }  */}
+      <input type="text" onChange={myScript} name="name"/>
+      <button onClick={()=>click()} >OK</button>
+     
     </div>
   );
 }

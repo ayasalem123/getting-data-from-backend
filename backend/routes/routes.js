@@ -23,7 +23,26 @@ router.use(bodyParser.json());
     }catch(e){
       res.status(409).json({ message: error.message });
     }
-    console.log(res.post)
+
+ })
+ router.patch('/post/:id',async(req,res)=>{
+  const {name,favoriteFoods,age}=req.body;
+  console.log(req);
+  const{ id}=req.params;
+  try{
+    const idpost=await post.findByIdAndUpdate(id,req.body);
+  }catch(e){
+    //console.log(e)
+  }
+ })
+ router.delete('/delete/:id',async(req,res)=>{
+  const{id}=req.params;
+  console.log(id);
+  try{
+    const idpost=await post.findByIdAndDelete(id);
+  }catch(error){
+    console.log(error);
+  }
  })
 
 export default router;
